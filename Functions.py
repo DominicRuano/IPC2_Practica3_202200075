@@ -18,3 +18,10 @@ def filtrogenero(genero):
         if pelicula.Genero == genero:
             dic.append({"Nombre": pelicula.Nombre, "Genero": pelicula.Genero, "movieId": pelicula.IdPelicula})
     return dic
+
+def actualizar(id, nombre, genero):
+    for pelicula in peliculas:
+        if pelicula.IdPelicula == id:
+            pelicula.Nombre = nombre
+            pelicula.Genero = genero
+            return True
