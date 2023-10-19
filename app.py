@@ -1,6 +1,6 @@
 from flask import request, jsonify, Flask
 from flask_cors import CORS
-from Functions import addPelicula
+from Functions import addPelicula, filtrogenero
 
 app = Flask(__name__)
 CORS(app)
@@ -12,17 +12,15 @@ def postHome():
         nombre= request.json["name"]
         genre = request.json["genre"]
         genre = genre.lower()
-        if idFilm and nombre and genre:
-            addPelicula(idFilm, nombre, genre)
-            return jsonify({"message": "datos leidos correctamente"})
-        else:
-            return jsonify({"message": "Ocurrio un error inesperado al leer json"})
+
+        addPelicula(idFilm, nombre, genre)
+        return jsonify({"message": "datos leidos correctamente"})
     except:
         return jsonify({"message": "Ocurrio un error, verifique el json"})
 
-@app.route("/", methods = ["GET"])
-def getHome():
-    return jsonify({"message": "ipc2 desde un get ahora mismo"})
+@app.route("/api/all-movies-by-genre/<genero>", methods = ["GET"])
+def getHome(genero):
+    return filtrogenero(genero.lower())
 
 
 if __name__ == '__main__':
