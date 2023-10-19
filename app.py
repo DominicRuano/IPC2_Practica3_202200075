@@ -1,12 +1,20 @@
 from flask import request, jsonify, Flask
 from flask_cors import CORS
-from Functions import addPelicula, filtrogenero
+from Functions import addPelicula, filtrogenero, getTodo
 
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/", methods = ["GET"])
+def getHome():
+    return jsonify({"message": "API esta viva!"})
+
+@app.route("/api/get-todo", methods = ["GET"])
+def gettodo():
+    return getTodo()
+
 @app.route('/api/new-movie', methods = ["POST"]) #por defecto es de tipo GET
-def postHome():
+def postAddMovie():
     try:
         idFilm = request.json["movieId"]
         nombre= request.json["name"]
@@ -19,7 +27,7 @@ def postHome():
         return jsonify({"message": "Ocurrio un error, verifique el json"})
 
 @app.route("/api/all-movies-by-genre/<genero>", methods = ["GET"])
-def getHome(genero):
+def getFiltroGenero(genero):
     return filtrogenero(genero.lower())
 
 
