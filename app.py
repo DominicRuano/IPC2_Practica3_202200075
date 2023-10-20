@@ -21,8 +21,11 @@ def postAddMovie():
         genre = request.json["genre"]
         genre = genre.lower()
 
-        addPelicula(idFilm, nombre, genre)
-        return jsonify({"message": "datos leidos correctamente."})
+        valor = addPelicula(idFilm, nombre, genre)
+        if valor == 1:
+            return jsonify({"message": "datos leidos correctamente."})
+        if valor == 2:
+            return jsonify({"message": "no se pueden agregar dos peliculas con el mismo id."})
     except:
         return jsonify({"message": "Ocurrio un error, verifique el json."})
 

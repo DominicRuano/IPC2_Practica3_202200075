@@ -4,7 +4,13 @@ peliculas = []
 
 
 def addPelicula(id, nombre, genero):
+
+    for pelicula in peliculas:
+        if pelicula.IdPelicula == id:
+            return 2
+
     peliculas.append(Pelicula(id, nombre, genero))
+    return 1
 
 def getTodo():
     dic = []
